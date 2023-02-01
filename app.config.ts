@@ -1,4 +1,5 @@
-{
+import 'dotenv/config';
+export default {
   "expo": {
     "name": "bakery-app",
     "slug": "bakery-app",
@@ -28,6 +29,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    extra: {
+      api_url: process.env.API_URL
     }
   }
 }
