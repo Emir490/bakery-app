@@ -1,7 +1,8 @@
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { AddScreenNavigationProp, RootAdminParamList, RootEmployeersParamList, RootItemsParamList, RootStackParamList, AddItemScreenNavigationProp } from "../types/navigation";
+import { AddScreenNavigationProp, RootAdminParamList, RootEmployeersParamList, RootItemsParamList, RootStackParamList, AddItemScreenNavigationProp, RootProductionParamList, RootBakeryParamList, RootPastryParamList } from "../types/navigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import useAuth from "../hooks/useAuth";
 import Employees from "./Employees";
 import Login from "./Login";
@@ -16,11 +17,17 @@ import Items from "./Items";
 import AddItem from "./AddItem";
 import useItems from "../hooks/useItems";
 import { Item } from "../interfaces/item.interface";
+import Production from "./Production";
+import AddDate from "./AddDate";
+import AddProduction from "./AddProduction";
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator<RootAdminParamList>();
 const Employee = createStackNavigator<RootEmployeersParamList>();
 const ItemTab = createStackNavigator<RootItemsParamList>();
+const ProductionTab = createBottomTabNavigator<RootProductionParamList>();
+const BakeryStack = createStackNavigator<RootBakeryParamList>();
+const PastryStack = createStackNavigator<RootPastryParamList>();
 
 function EmployeesNav() {
   return (
@@ -37,6 +44,35 @@ function ItemsNav() {
       <ItemTab.Screen name="ItemList" component={Items} options={{headerShown: false}} />
       <ItemTab.Screen name="AddItem" component={AddItem} options={{headerShown: false, presentation: 'modal'}} />
     </ItemTab.Navigator>
+  )
+}
+
+function Bakery() {
+  return (
+    <BakeryStack.Navigator>
+      <BakeryStack.Screen name="Production" component={Production} options={{title: 'Panadería'}} />
+      <BakeryStack.Screen name="AddDate" component={AddDate} options={{presentation: 'modal'}} />
+      <BakeryStack.Screen name="AddProduction" component={AddProduction} />
+    </BakeryStack.Navigator>
+  )
+}
+
+function Pastry() {
+  return (
+    <PastryStack.Navigator>
+      <PastryStack.Screen name="Production" component={Production} />
+      <PastryStack.Screen name="AddDate" component={AddDate} options={{presentation: 'modal'}} />
+      <PastryStack.Screen name="AddProduction" component={AddProduction} />
+    </PastryStack.Navigator>
+  )
+}
+
+function ProductionNav() {
+  return (
+    <ProductionTab.Navigator>
+      <ProductionTab.Screen name="Bakery" component={Bakery} options={{headerShown: false}} />
+      <ProductionTab.Screen name="Pastry" component={Pastry} />
+    </ProductionTab.Navigator>
   )
 }
 
@@ -81,6 +117,7 @@ function Admin() {
           headerShown: modal
         }}
       />
+      <Drawer.Screen name="Production" component={ProductionNav} options={{headerShown: false}} />
     </Drawer.Navigator>
   );
 }

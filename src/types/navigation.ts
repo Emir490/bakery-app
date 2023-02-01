@@ -9,6 +9,7 @@ export type RootStackParamList = {
 export type RootAdminParamList = {
   Employees: undefined;
   Items: undefined;
+  Production: undefined;
 }
 
 export type RootEmployeersParamList = {
@@ -19,6 +20,23 @@ export type RootEmployeersParamList = {
 export type RootItemsParamList = {
   ItemList: undefined;
   AddItem: undefined;
+}
+
+export type RootProductionParamList = {
+  Bakery: undefined;
+  Pastry: undefined;
+}
+
+export type RootBakeryParamList = {
+  Production: undefined;
+  AddDate: undefined;
+  AddProduction: undefined;
+}
+
+export type RootPastryParamList = {
+  Production: undefined;
+  AddDate: undefined;
+  AddProduction: undefined;
 }
 
 export type LoginScreenNavigationProp = NavigationProp<RootStackParamList, 'Login'>;
