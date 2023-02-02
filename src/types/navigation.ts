@@ -35,7 +35,6 @@ export type RootBakeryParamList = {
 
 export type RootPastryParamList = {
   Production: undefined;
-  AddDate: undefined;
   AddProduction: undefined;
 }
 

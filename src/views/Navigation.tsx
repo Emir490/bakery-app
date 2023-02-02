@@ -18,7 +18,6 @@ import AddItem from "./AddItem";
 import useItems from "../hooks/useItems";
 import { Item } from "../interfaces/item.interface";
 import Production from "./Production";
-import AddDate from "./AddDate";
 import AddProduction from "./AddProduction";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -105,15 +104,14 @@ function Bakery() {
         ),
         headerRight: () => (
           <TouchableOpacity onPress={() => {
-            navigate('AddDate');
+            navigate('AddProduction');
           }} style={{ backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5 }}>
             <Ionicons name="add-sharp" size={24} color="white" />
           </TouchableOpacity>
         ),
         headerStyle: { backgroundColor: colors.deep }
       }} />
-      <BakeryStack.Screen name="AddDate" component={AddDate} options={{ presentation: 'modal', title: 'Turno', headerStyle: {backgroundColor: colors.banana}, headerBackTitleStyle: {color: colors.brown} }} />
-      <BakeryStack.Screen name="AddProduction" component={AddProduction} />
+      <BakeryStack.Screen name="AddProduction" component={AddProduction} options={{presentation: 'modal', headerBackTitleStyle: {color: colors.banana}, headerStyle: {backgroundColor: colors.banana}, headerTintColor: colors.brown, title: 'Agregar producción' }} />
     </BakeryStack.Navigator>
   )
 }
@@ -138,7 +136,6 @@ function Pastry() {
         ),
         headerStyle: { backgroundColor: colors.deep }
       }} />
-      <PastryStack.Screen name="AddDate" component={AddDate} options={{ presentation: 'modal', title: 'Turno', headerStyle: {backgroundColor: colors.deep} }} />
       <PastryStack.Screen name="AddProduction" component={AddProduction} />
     </PastryStack.Navigator>
   )
