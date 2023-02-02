@@ -7,6 +7,4 @@ export interface UsersContextProps {
     user: User;
     users: User[];
     setUser: React.Dispatch<React.SetStateAction<User>>;
-    modal: boolean;
-    setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }

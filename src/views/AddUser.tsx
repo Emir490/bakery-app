@@ -37,7 +37,7 @@ const AddUser = () => {
   const [fixSalary, setFixSalary] = useState(false);
   const [alert, setAlert] = useState({} as Props);
 
-  const { user: userObj, setModal, addUser, updateUser } = useUsers();
+  const { user: userObj, addUser, updateUser } = useUsers();
   const navigation = useNavigation<ListScreenNavigationProp>();
   const animated = new Animated.Value(0);
 
@@ -63,15 +63,6 @@ const AddUser = () => {
       setFixSalary(flag);
     }
   }, []);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", (e) => {
-      setModal(true);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, [navigation]);
 
   const handleAdd = async () => {
     if (

@@ -13,7 +13,6 @@ interface Props {
 const Item = ({ item }: Props) => {
   const { _id, name, price, type, area } = item;
 
-  const { setModal } = useUsers();
   const { setItem, deleteItem } = useItems();
   const { navigate } = useNavigation<AddItemScreenNavigationProp>();
 
@@ -21,7 +20,6 @@ const Item = ({ item }: Props) => {
     <Pressable
       style={styles.container}
       onPress={() => {
-        setModal(false);
         setItem(item);
         navigate("AddItem");
       }}

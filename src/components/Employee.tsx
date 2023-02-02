@@ -12,25 +12,28 @@ interface Props {
 const Employee = ({ userObj }: Props) => {
   const { user, name, phone, position, salary } = userObj;
 
-  const { setUser, setModal, deleteUser } = useUsers();
+  const { setUser, deleteUser } = useUsers();
   const { navigate } = useNavigation<AddScreenNavigationProp>();
 
+  const handlePress = () => {
+    setUser(userObj);
+    navigate('Add');
+  }
+
+  const handleLongPress = () => {
+    Alert.alert("Acción Irreversible", "¿Estás seguro de querer eliminar este empleado?", [
+      {
+        text: "Eliminar",
+        onPress: () => deleteUser(`${userObj._id}`)
+      },
+      {
+        text: "Cancelar"
+      }
+    ])
+  }
+
   return (
-    <Pressable style={styles.container} onPress={() => {
-      setModal(false);
-      setUser(userObj);
-      navigate('Add');
-    }} onLongPress={() => {
-      Alert.alert("Acción Irreversible", "¿Estás seguro de querer eliminar este empleado?", [
-        {
-          text: "Eliminar",
-          onPress: () => deleteUser(`${userObj._id}`)
-        },
-        {
-          text: "Cancelar"
-        }
-      ])
-    }}>
+    <Pressable style={styles.container} onPress={handlePress} onLongPress={handleLongPress}>
       <Text style={styles.text}>
         <Text style={styles.label}>Usuario: </Text>
         {user}

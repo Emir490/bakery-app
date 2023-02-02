@@ -1,7 +1,7 @@
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { AddScreenNavigationProp, RootAdminParamList, RootEmployeersParamList, RootItemsParamList, RootStackParamList, AddItemScreenNavigationProp, RootProductionParamList, RootBakeryParamList, RootPastryParamList } from "../types/navigation";
+import { AddScreenNavigationProp, RootAdminParamList, RootEmployeersParamList, RootItemsParamList, RootStackParamList, AddItemScreenNavigationProp, RootProductionParamList, RootBakeryParamList, RootPastryParamList, AddProductionNavigationProp } from "../types/navigation";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerNavigationProp } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import useAuth from "../hooks/useAuth";
 import Employees from "./Employees";
@@ -20,6 +20,7 @@ import { Item } from "../interfaces/item.interface";
 import Production from "./Production";
 import AddDate from "./AddDate";
 import AddProduction from "./AddProduction";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator<RootAdminParamList>();
@@ -30,38 +31,114 @@ const BakeryStack = createStackNavigator<RootBakeryParamList>();
 const PastryStack = createStackNavigator<RootPastryParamList>();
 
 function EmployeesNav() {
+  const navigator = useNavigation<AddScreenNavigationProp>();
+  const menu = useNavigation<DrawerNavigationProp<RootAdminParamList>>();
+  const { setUser } = useUsers();
   return (
     <Employee.Navigator>
-      <Employee.Screen name="List" component={Employees} options={{headerShown: false}} />
-      <Employee.Screen name="Add" component={AddUser} options={{headerShown: false, presentation: 'modal'}} />
+      <Employee.Screen name="List" component={Employees} options={{
+        headerRight: () => (
+          <TouchableOpacity onPress={() => {
+            setUser({} as User);
+            navigator.navigate('Add');
+          }} style={{ backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5 }}>
+            <Ionicons name="add-sharp" size={24} color="white" />
+          </TouchableOpacity>
+        ),
+        headerStyle: { backgroundColor: colors.deep },
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            menu.toggleDrawer();
+          }}>
+            <Ionicons style={{ marginLeft: 15 }} name="ios-menu" size={36} color="black" />
+          </TouchableOpacity>
+        ),
+        title: 'Empleados'
+      }} />
+      <Employee.Screen name="Add" component={AddUser} options={{ headerShown: false, presentation: 'modal' }} />
     </Employee.Navigator>
   )
 }
 
 function ItemsNav() {
+  const menu = useNavigation<DrawerNavigationProp<RootAdminParamList>>();
+  const { setItem } = useItems();
+  const { navigate } = useNavigation<AddItemScreenNavigationProp>();
   return (
     <ItemTab.Navigator>
-      <ItemTab.Screen name="ItemList" component={Items} options={{headerShown: false}} />
-      <ItemTab.Screen name="AddItem" component={AddItem} options={{headerShown: false, presentation: 'modal'}} />
+      <ItemTab.Screen name="ItemList" component={Items} options={{
+        headerRight: () => (
+          <TouchableOpacity onPress={() => {
+            setItem({} as Item);
+            navigate('AddItem');
+          }} style={{ backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5 }}>
+            <Ionicons name="add-sharp" size={24} color="white" />
+          </TouchableOpacity>
+        ),
+        headerStyle: { backgroundColor: colors.deep },
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            menu.toggleDrawer();
+          }}>
+            <Ionicons style={{ marginLeft: 15 }} name="ios-menu" size={36} color="black" />
+          </TouchableOpacity>
+        ),
+        title: 'Artículos'
+      }} />
+      <ItemTab.Screen name="AddItem" component={AddItem} options={{ headerShown: false, presentation: 'modal' }} />
     </ItemTab.Navigator>
   )
 }
 
 function Bakery() {
+  const menu = useNavigation<DrawerNavigationProp<RootAdminParamList>>();
+  const { navigate } = useNavigation<AddProductionNavigationProp>();
   return (
     <BakeryStack.Navigator>
-      <BakeryStack.Screen name="Production" component={Production} options={{title: 'Panadería'}} />
-      <BakeryStack.Screen name="AddDate" component={AddDate} options={{presentation: 'modal'}} />
+      <BakeryStack.Screen name="Production" component={Production} options={{
+        title: 'Panadería', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            menu.toggleDrawer();
+          }}>
+            <Ionicons style={{ marginLeft: 15 }} name="ios-menu" size={36} color="black" />
+          </TouchableOpacity>
+        ),
+        headerRight: () => (
+          <TouchableOpacity onPress={() => {
+            navigate('AddDate');
+          }} style={{ backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5 }}>
+            <Ionicons name="add-sharp" size={24} color="white" />
+          </TouchableOpacity>
+        ),
+        headerStyle: { backgroundColor: colors.deep }
+      }} />
+      <BakeryStack.Screen name="AddDate" component={AddDate} options={{ presentation: 'modal', title: 'Turno', headerStyle: {backgroundColor: colors.banana}, headerBackTitleStyle: {color: colors.brown} }} />
       <BakeryStack.Screen name="AddProduction" component={AddProduction} />
     </BakeryStack.Navigator>
   )
 }
 
 function Pastry() {
+  const menu = useNavigation<DrawerNavigationProp<RootAdminParamList>>();
   return (
     <PastryStack.Navigator>
-      <PastryStack.Screen name="Production" component={Production} />
-      <PastryStack.Screen name="AddDate" component={AddDate} options={{presentation: 'modal'}} />
+      <PastryStack.Screen name="Production" component={Production} options={{
+        title: 'Pastelería', headerLeft: () => (
+          <TouchableOpacity onPress={() => {
+            menu.toggleDrawer();
+          }}>
+            <Ionicons style={{ marginLeft: 15 }} name="ios-menu" size={36} color="black" />
+          </TouchableOpacity>
+        ),
+        headerRight: () => (
+          <TouchableOpacity onPress={() => {
+          }} style={{ backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5 }}>
+            <Ionicons name="add-sharp" size={24} color="white" />
+          </TouchableOpacity>
+        ),
+        headerStyle: { backgroundColor: colors.deep }
+      }} />
+      <PastryStack.Screen name="AddDate" component={AddDate} options={{ presentation: 'modal', title: 'Turno', headerStyle: {backgroundColor: colors.deep} }} />
       <PastryStack.Screen name="AddProduction" component={AddProduction} />
     </PastryStack.Navigator>
   )
@@ -69,55 +146,44 @@ function Pastry() {
 
 function ProductionNav() {
   return (
-    <ProductionTab.Navigator>
-      <ProductionTab.Screen name="Bakery" component={Bakery} options={{headerShown: false}} />
-      <ProductionTab.Screen name="Pastry" component={Pastry} />
+    <ProductionTab.Navigator screenOptions={({route}) => ({
+      headerShown: false,
+      tabBarStyle: {
+        backgroundColor: colors.coffee,
+        borderTopColor: colors.coffee
+      },
+      tabBarIcon: ({color, size}) => {
+        let iconName;
+
+        if (route.name == 'Bakery') {
+          iconName = 'baguette';
+        } else if(route.name == 'Pastry') {
+          iconName = 'cake-variant';
+        }
+
+        return <MaterialCommunityIcons name={iconName === 'baguette'? 'baguette' : 'cake-variant'} size={24} color='white' />
+      }
+    })}>
+      <ProductionTab.Screen name="Bakery" component={Bakery} options={{ headerShown: false, tabBarActiveTintColor: '#FFF' }} />
+      <ProductionTab.Screen name="Pastry" component={Pastry} options={{headerShown: false, tabBarActiveTintColor: '#FFF'}} />
     </ProductionTab.Navigator>
   )
 }
 
 function Admin() {
-  const navigator = useNavigation<AddScreenNavigationProp>();
-  const { navigate } = useNavigation<AddItemScreenNavigationProp>();
-  const { modal, setModal, setUser } = useUsers();
-  const { setItem } = useItems();
   return (
     <Drawer.Navigator>
       <Drawer.Screen
         name="Employees"
         component={EmployeesNav}
-        options={{
-          headerRight: () => (
-            <TouchableOpacity onPress={() => {
-              setModal(false);
-              setUser({} as User);
-              navigator.navigate('Add');
-            }} style={{backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5}}>
-              <Ionicons name="add-sharp" size={24} color="white" />
-            </TouchableOpacity>
-          ), 
-          headerStyle: {backgroundColor: colors.deep},
-          headerShown: modal
-        }}
+        options={{ headerShown: false }}
       />
       <Drawer.Screen
         name="Items"
         component={ItemsNav}
-        options={{
-          headerRight: () => (
-            <TouchableOpacity onPress={() => {
-              setModal(false);
-              setItem({} as Item);
-              navigate('AddItem');
-            }} style={{backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5}}>
-              <Ionicons name="add-sharp" size={24} color="white" />
-            </TouchableOpacity>
-          ), 
-          headerStyle: {backgroundColor: colors.deep},
-          headerShown: modal
-        }}
+        options={{ headerShown: false }}
       />
-      <Drawer.Screen name="Production" component={ProductionNav} options={{headerShown: false}} />
+      <Drawer.Screen name="Production" component={ProductionNav} options={{ headerShown: false }} />
     </Drawer.Navigator>
   );
 }

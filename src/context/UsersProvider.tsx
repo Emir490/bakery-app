@@ -8,7 +8,6 @@ import { setAuthorizationHeader } from "../config/api";
 const UsersContext = createContext<UsersContextProps>({} as UsersContextProps);
 
 const UsersProvider = ({ children }: { children: ReactNode }) => {
-    const [modal, setModal] = useState(true);
     const [users, setUsers] = useState([] as User[]);
     const [user, setUser] = useState({} as User);
 
@@ -118,8 +117,6 @@ const UsersProvider = ({ children }: { children: ReactNode }) => {
           users,
           setUser,
           addUser,
-          modal,
-          setModal,
           updateUser,
           deleteUser,
         }}

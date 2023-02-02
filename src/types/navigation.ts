@@ -45,3 +45,4 @@ export type ListScreenNavigationProp = NavigationProp<RootEmployeersParamList, '
 export type AddScreenNavigationProp = NavigationProp<RootEmployeersParamList, 'Add'>;
 export type ItemsScreenNavigationProp = NavigationProp<RootItemsParamList, 'ItemList'>;
 export type AddItemScreenNavigationProp = NavigationProp<RootItemsParamList, 'AddItem'>;
+export type AddProductionNavigationProp = NavigationProp<RootBakeryParamList>

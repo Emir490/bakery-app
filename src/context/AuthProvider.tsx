@@ -25,7 +25,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           Authorization: `Bearer ${token}`
         }
       }
-
+      
       try {
         const { data } = await axios(`${apiUrl}/users/profile`, config);
         setAuth(data);

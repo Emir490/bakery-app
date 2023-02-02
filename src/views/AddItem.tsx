@@ -57,7 +57,6 @@ const AddItem = () => {
 
   const animated = new Animated.Value(0);
   const navigation = useNavigation<ItemsScreenNavigationProp>();
-  const { setModal } = useUsers();
   const { item, addItem, updateItem } = useItems();
 
   const { msg } = alert;
@@ -79,15 +78,6 @@ const AddItem = () => {
         : (area[1].selected = true);
     }
   }, []);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", (e) => {
-      setModal(true);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, [navigation]);
 
   const handleAdd = async () => {
     if (
