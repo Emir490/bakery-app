@@ -33,6 +33,7 @@ function EmployeesNav() {
   const navigator = useNavigation<AddScreenNavigationProp>();
   const menu = useNavigation<DrawerNavigationProp<RootAdminParamList>>();
   const { setUser } = useUsers();
+  
   return (
     <Employee.Navigator>
       <Employee.Screen name="List" component={Employees} options={{
@@ -99,19 +100,21 @@ function Bakery() {
           <TouchableOpacity onPress={() => {
             menu.toggleDrawer();
           }}>
-            <Ionicons style={{ marginLeft: 15 }} name="ios-menu" size={36} color="black" />
+            <Ionicons style={{ marginLeft: 15 }} name="ios-menu" size={36} color={colors.banana} />
           </TouchableOpacity>
         ),
         headerRight: () => (
           <TouchableOpacity onPress={() => {
             navigate('AddProduction');
-          }} style={{ backgroundColor: colors.brown, marginRight: 20, borderRadius: 50, padding: 5 }}>
-            <Ionicons name="add-sharp" size={24} color="white" />
+          }} style={{ backgroundColor: colors.banana, marginRight: 20, borderRadius: 50, padding: 5 }}>
+            <Ionicons name="add-sharp" size={24} color={colors.dark} />
           </TouchableOpacity>
         ),
-        headerStyle: { backgroundColor: colors.deep }
+        headerStyle: { backgroundColor: colors.dark },
+        headerTitleStyle: { color: colors.banana },
+        headerShadowVisible: false
       }} />
-      <BakeryStack.Screen name="AddProduction" component={AddProduction} options={{presentation: 'modal', headerBackTitleStyle: {color: colors.banana}, headerStyle: {backgroundColor: colors.banana}, headerTintColor: colors.brown, title: 'Agregar producción' }} />
+      <BakeryStack.Screen name="AddProduction" component={AddProduction} options={{presentation: 'modal', headerBackTitleStyle: {color: colors.banana}, headerStyle: {backgroundColor: colors.dark}, headerTintColor: colors.banana, title: 'Agregar producción', headerTitleStyle: {color: colors.banana}, headerShadowVisible: false, headerBackTitleVisible: false }} />
     </BakeryStack.Navigator>
   )
 }
@@ -146,8 +149,8 @@ function ProductionNav() {
     <ProductionTab.Navigator screenOptions={({route}) => ({
       headerShown: false,
       tabBarStyle: {
-        backgroundColor: colors.coffee,
-        borderTopColor: colors.coffee
+        backgroundColor: colors.dark,
+        borderTopColor: colors.dark
       },
       tabBarIcon: ({color, size}) => {
         let iconName;

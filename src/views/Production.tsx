@@ -15,6 +15,6 @@ export default Production
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.deep,
+    backgroundColor: colors.dark,
   },
 })
