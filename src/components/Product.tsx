@@ -7,26 +7,26 @@ import {
 } from "react-native";
 import { Item } from "../interfaces/item.interface";
 import { colors } from "../styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useProductions from "../hooks/useProductions";
+import { IProduct } from "../interfaces/product.interface";
 
 interface Props {
   product: Item;
+  updateProducts: (product: IProduct) => void;
 }
 
-const Product = ({ product }: Props) => {
+const Product = ({ product, updateProducts }: Props) => {
   const [quantity, setQuantity] = useState(0);
 
-  const { _id, name } = product;
-  const { items, setItems } = useProductions();
+  const { _id, name } = product;  
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{name}</Text>
-      <TextInput keyboardType="numeric" value={`${quantity}`} onChangeText={(text) => {
+      <TextInput style={styles.quantity} keyboardType="numeric" value={`${quantity}`} onChangeText={(text) => {
         setQuantity(Number(text));
-        setItems([...items, { _id, quantity: Number(text) }])
-      }} />
+      }} onBlur={() => updateProducts({itemId: _id, quantity})} />
     </View>
   );
 };
@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     color: colors.banana,
   },
   quantity: {
-    flexDirection: "row",
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+    backgroundColor: colors.banana,
+    borderRadius: 10
   },
 });
