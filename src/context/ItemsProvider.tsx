@@ -60,6 +60,27 @@ const ItemsProvider = ({ children }: {children : ReactNode}) => {
         }
     }
 
+    const getItem = async (id: string) => {
+        try {
+            const config = await setAuthorizationHeader();
+
+            const { data } = await clientAxios(`/item/${id}`, config);
+
+            const { _id, name, price, type, area } = data;
+            const obj = {
+                _id,
+                name,
+                price,
+                type,
+                area
+            }
+
+            return obj;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const updateItem = async (id: string, item: Item) => {
         try {
             const config = await setAuthorizationHeader();
@@ -98,7 +119,7 @@ const ItemsProvider = ({ children }: {children : ReactNode}) => {
     }
 
     return (
-        <ItemsContext.Provider value={{items, item, setItem, addItem, updateItem, deleteItem}}>
+        <ItemsContext.Provider value={{items, item, setItem, addItem, getItem, updateItem, deleteItem}}>
             {children}
         </ItemsContext.Provider>
     )

@@ -10,23 +10,35 @@ import { colors } from "../styles";
 import { useEffect, useState } from "react";
 import useProductions from "../hooks/useProductions";
 import { IProduct } from "../interfaces/product.interface";
+import useItems from "../hooks/useItems";
 
 interface Props {
-  product: Item;
+  product: Item
   updateProducts: (product: IProduct) => void;
 }
 
-const Product = ({ product, updateProducts }: Props) => {
+const Product = ({ product: item, updateProducts }: Props) => {
   const [quantity, setQuantity] = useState(0);
 
-  const { _id, name } = product;  
+  const { _id, name } = item;
+  const { production } = useProductions();
+
+  useEffect(() => {
+    const itemObj = production._id ? production.items.find(productionState => productionState.item == _id) : null;
+
+    if (itemObj?.item) {
+      setQuantity(itemObj.quantity);
+      updateProducts({item: itemObj.item, quantity: itemObj.quantity});
+    }
+  }, [])
+
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{name}</Text>
-      <TextInput style={styles.quantity} keyboardType="numeric" value={`${quantity}`} onChangeText={(text) => {
+      <TextInput style={styles.quantity} placeholder="0" keyboardType="numeric" value={quantity === 0? '' : `${quantity}`} onChangeText={(text) => {
         setQuantity(Number(text));
-      }} onBlur={() => updateProducts({itemId: _id, quantity})} />
+      }} onBlur={() => updateProducts({item: _id, quantity})} />
     </View>
   );
 };
