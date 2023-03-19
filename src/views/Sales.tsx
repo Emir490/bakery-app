@@ -12,8 +12,8 @@ const Sales = () => {
 export default Sales;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.dark
-    }
+  container: {
+    flex: 1,
+    backgroundColor: colors.dark
+  }
 });

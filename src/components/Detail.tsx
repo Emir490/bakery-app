@@ -4,13 +4,16 @@ import { Item } from "../interfaces/item.interface";
 import { useEffect, useState } from "react";
 import { formatMoney } from "../helpers";
 import { AntDesign } from '@expo/vector-icons';
+import { Sale } from "../interfaces/sale.interface";
 
 interface Props {
   item: Item;
-  updateItems: () => void;
+  setFinalUnits: React.Dispatch<React.SetStateAction<number>>;
+  setFinalPrice: React.Dispatch<React.SetStateAction<number>>;
+  updateItems: (sale: Sale) => void;
 }
 
-const Detail = ({ item, updateItems }: Props) => {
+const Detail = ({ item, setFinalUnits, setFinalPrice, updateItems }: Props) => {
     const [quantity, setQuantity] = useState(0);
     const [units, setUnit] = useState(0);
     const [flag, setFlag] = useState(false);
@@ -19,7 +22,7 @@ const Detail = ({ item, updateItems }: Props) => {
 
     useEffect(() => {
       setUnit(Number(unit));
-    }, [])
+    }, []);
 
   return (
     <View style={styles.container}>
@@ -34,6 +37,9 @@ const Detail = ({ item, updateItems }: Props) => {
             setFlag(false);
             setQuantity(quantity - 1);
             setUnit(Number(units) + 1);
+            setFinalUnits((prevUnits) => prevUnits - 1);
+            setFinalPrice((prevPrice) => prevPrice - price);
+            updateItems({ _id: item._id, units: quantity - 1})
           } else {
             setFlag(true);
           }
@@ -48,10 +54,12 @@ const Detail = ({ item, updateItems }: Props) => {
             setDisable(false);
             setQuantity(quantity + 1)
             setUnit(Number(units) - 1);
+            setFinalUnits((prevUnits) => prevUnits + 1);
+            setFinalPrice((prevPrice) => prevPrice + price);
+            updateItems({ _id: item._id, units: quantity + 1 });
           } else {
             setDisable(true);
           }
-
         }}>
             <AntDesign name="pluscircle" size={24} color={colors.banana} />
         </TouchableOpacity>

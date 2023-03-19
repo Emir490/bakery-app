@@ -39,7 +39,17 @@ const AddProduction = () => {
     } else {
       setProducts((prevItems) => [...prevItems, item]);
     }
-  };
+  }
+
+  const handleOnPress = () => {
+    if (production._id) {
+      editProduction(production._id, { items: products });
+    } else {
+      addProductions({ items: products, area: screen });
+    }
+    
+    navigator.goBack();
+  }
 
   return (
     <View style={styles.container}>
@@ -53,15 +63,7 @@ const AddProduction = () => {
       />
       <Pressable
         style={styles.button}
-        onPress={() => {
-          if (production._id) {
-            editProduction(production._id, { items: products });
-          } else {
-            addProductions({ items: products, area: screen });
-          }
-          
-          navigator.goBack();
-        }}
+        onPress={handleOnPress}
       >
         <Text style={styles.buttonText}>
           {production?._id ? "Guardar Cambios" : "Agregar Producción"}

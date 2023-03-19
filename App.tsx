@@ -6,6 +6,7 @@ import { ItemsProvider } from "./src/context/ItemsProvider";
 import { ProductionProvider } from "./src/context/ProductionProvider";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { LogBox } from 'react-native';
+import { SalesProvider } from "./src/context/SalesProvider";
 
 export default function App() {
   LogBox.ignoreLogs(["Sending `onAnimatedValueUpdate` with no listeners registered."]);
@@ -15,7 +16,9 @@ export default function App() {
         <UsersProvider>
           <ItemsProvider>
             <ProductionProvider>
-              <Navigation />
+              <SalesProvider>
+                <Navigation />
+              </SalesProvider>
             </ProductionProvider>
           </ItemsProvider>
         </UsersProvider>

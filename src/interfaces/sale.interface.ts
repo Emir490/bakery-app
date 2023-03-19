@@ -1,5 +1,4 @@
 export interface Sale {
-    item: string;
-    quantity: number;
-    price: number;
+    _id: string;
+    units: number;
 }

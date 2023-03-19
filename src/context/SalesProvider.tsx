@@ -11,7 +11,7 @@ export const SalesProvider = ({children}: {children: ReactNode}) => {
     const [sales, setSales] = useState<Cart[]>([]);
     const [sale, setSale] = useState<Cart>({} as Cart);
 
-    const addSale = async (items: Sale[]) => {
+    const addSale = async (items: Cart) => {
         try {
             const config = await setAuthorizationHeader();
 
